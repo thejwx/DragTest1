@@ -14,11 +14,11 @@
 @property (retain, nonatomic) IBOutlet UIControl *control;
 @property float touchPointDifference_x;
 @property float touchPointDifference_y;
+@property int simpleTracker;
 
-- (IBAction) imageTouched:(id) sender withEvent:(UIEvent *) event;
-- (IBAction) imageMoving:(id) sender;
-- (IBAction) imageMoveEnded:(id) sender;
-- (IBAction) imageMovedLogged:(id) sender withEvent:(UIEvent *) event;
+- (void)addDragger:(NSString *)theImage startingPoint:(CGPoint)startingPoint endingPoint:(CGPoint)endingPoint width:(float)width height:(float)height;
+- (void)checkIfOverTarget:(id) sender;
+- (void)imageMoveEnded:(id) sender;
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer;
     
 @end
