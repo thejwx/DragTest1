@@ -12,8 +12,8 @@
 
 @implementation ViewController
 
-@synthesize dropZone = _dropZone;
-@synthesize control = _control;
+@synthesize dropZone    = _dropZone;
+@synthesize control     = _control;
 @synthesize touchPointDifference_x, touchPointDifference_y;
 @synthesize simpleTracker;
 
@@ -63,10 +63,10 @@
     
     // MOVE THE DRAGGABLE BUTTON INTO VIEW
     [UIButton animateWithDuration:.3
-                            delay:0
-                          options: UIViewAnimationCurveEaseInOut
-                       animations: ^{ button.center = endingPoint; }
-                       completion: nil];
+              delay:0
+              options: UIViewAnimationCurveEaseInOut
+              animations: ^{ button.center = endingPoint; }
+              completion: nil];
 }
 
 
@@ -130,35 +130,33 @@
     UIControl *control = sender;
     if (CGRectContainsPoint(_dropZone.frame, control.center)) {
         [UIButton animateWithDuration:.2
-                                delay:0
-                              options: UIViewAnimationCurveEaseIn
-                           animations: ^{ simpleTracker++;
-                                          control.center = _dropZone.center; }
-                           completion:^ (BOOL finished) {
-                                [UIButton animateWithDuration:.4
-                                    delay:1
-                                    options: UIViewAnimationCurveEaseInOut
-                                    animations: ^{ control.center = [[control.layer valueForKey:@"originalCenter"] CGPointValue]; }
-                                                   completion: ^(BOOL finished) {
-                                                       simpleTracker--;
-                                                       [self checkIfOverTarget:control];
-                                                   }];
-                           }];
+                  delay:0
+                  options: UIViewAnimationCurveEaseIn
+                  animations: ^{ simpleTracker++;
+                                 control.center = _dropZone.center; 
+                               }
+                  completion:^ (BOOL finished) { [UIButton animateWithDuration:.4
+                                                           delay:1
+                                                           options: UIViewAnimationCurveEaseInOut
+                                                           animations: ^{ control.center = [[control.layer valueForKey:@"originalCenter"] CGPointValue]; }
+                                                           completion: ^(BOOL finished) { simpleTracker--;
+                                                                                          [self checkIfOverTarget:control];
+                                                                                        }];
+                                               }];
     } else {
         [UIButton animateWithDuration:.4
-                                delay:0
-                              options: UIViewAnimationCurveEaseInOut
-                           animations: ^{ control.center = [[control.layer valueForKey:@"originalCenter"] CGPointValue]; }
-                           completion: nil];
+                  delay:0
+                  options: UIViewAnimationCurveEaseInOut
+                  animations: ^{ control.center = [[control.layer valueForKey:@"originalCenter"] CGPointValue]; }
+                  completion: nil];
     }
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
-    if(recognizer.state == UIGestureRecognizerStateBegan || 
-       recognizer.state == UIGestureRecognizerStateChanged) {
+    if(recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged) { 
         CGPoint translation = [recognizer translationInView:recognizer.view.superview];
         recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, 
-                                             recognizer.view.center.y + translation.y);
+        recognizer.view.center.y + translation.y);
         [self checkIfOverTarget:recognizer.view];
         [recognizer setTranslation:CGPointZero inView:recognizer.view.superview];
     }
